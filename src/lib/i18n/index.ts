@@ -5,6 +5,9 @@ import { zh } from "./zh";
 
 export type Language = "en" | "zh";
 
+// Language used until the user picks one in App Settings
+export const DEFAULT_LANGUAGE: Language = "zh";
+
 export const LANGUAGES: { id: Language; name: string }[] = [
   { id: "en", name: "English" },
   { id: "zh", name: "中文" },
@@ -19,9 +22,9 @@ const DICTIONARIES: Record<Language, Record<string, string>> = {
 export const getStoredLanguage = (): Language => {
   try {
     const stored = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
-    return stored === "zh" ? "zh" : "en";
+    return stored === "en" ? "en" : DEFAULT_LANGUAGE;
   } catch {
-    return "en";
+    return DEFAULT_LANGUAGE;
   }
 };
 
