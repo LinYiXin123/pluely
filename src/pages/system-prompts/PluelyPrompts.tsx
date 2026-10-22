@@ -20,6 +20,7 @@ import { useApp } from "@/contexts";
 import { safeLocalStorage } from "@/lib";
 import { STORAGE_KEYS } from "@/config";
 import moment from "moment";
+import { t } from "@/lib/i18n";
 
 interface PluelyPrompt {
   title: string;
@@ -122,7 +123,7 @@ export const PluelyPrompts = () => {
     } catch (err) {
       console.error("Failed to fetch Pluely prompts:", err);
       setError(
-        typeof err === "string" ? err : "Failed to fetch Pluely prompts"
+        typeof err === "string" ? err : t("Failed to fetch Pluely prompts")
       );
     } finally {
       setIsLoading(false);
@@ -247,13 +248,15 @@ export const PluelyPrompts = () => {
             {lastUpdated && (
               <div className="flex justify-end items-center gap-1 text-[10px] text-muted-foreground">
                 <ClockIcon className="size-2" />
-                <span>Last updated: {moment(lastUpdated).fromNow()}</span>
+                <span>
+                  {t("Last updated:")} {moment(lastUpdated).fromNow()}
+                </span>
               </div>
             )}
           </div>
         </div>
         {!hasActiveLicense && (
-          <GetLicense buttonText="Unlock" buttonClassName="shrink-0" />
+          <GetLicense buttonText={t("Unlock")} buttonClassName="shrink-0" />
         )}
       </div>
 

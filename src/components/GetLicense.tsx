@@ -3,6 +3,7 @@ import { Button } from "@/components";
 import { invoke } from "@tauri-apps/api/core";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { ANALYTICS_EVENTS, captureEvent } from "@/lib";
+import { t } from "@/lib/i18n";
 
 interface CheckoutResponse {
   success?: boolean;
@@ -47,7 +48,7 @@ export const GetLicense = ({
       size="sm"
       className={buttonClassName}
     >
-      {isCheckoutLoading ? "Loading..." : buttonText || "Get License"}
+      {isCheckoutLoading ? t("Loading...") : buttonText || t("Get License")}
     </Button>
   );
 };

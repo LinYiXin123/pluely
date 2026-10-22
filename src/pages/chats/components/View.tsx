@@ -33,6 +33,7 @@ import {
   ChatFiles,
   AudioRecorder,
 } from ".";
+import { t } from "@/lib/i18n";
 
 const View = () => {
   const { conversationId } = useParams();
@@ -86,12 +87,14 @@ const View = () => {
       isMainTitle={false}
       allowBackButton={true}
       title={messages?.title || ""}
-      description={`${messages?.messages.length} messages in this conversation`}
+      description={t("{count} messages in this conversation", {
+        count: messages?.messages.length ?? 0,
+      })}
       rightSlot={
         <div className="flex flex-row items-center gap-2">
           <Button
             variant="outline"
-            title="Open this conversation in overlay"
+            title={t("Open this conversation in overlay")}
             className="text-[10px] lg:text-sm h-6 lg:h-8"
             onClick={() =>
               conversationId && handleAttachToOverlay(conversationId)
@@ -101,18 +104,18 @@ const View = () => {
             {isAttached ? (
               <>
                 <Check className="size-3 lg:size-4 text-green-600" />
-                Attached
+                {t("Attached")}
               </>
             ) : (
               <>
-                Open in Overlay{" "}
+                {t("Open in Overlay")}{" "}
                 <MessageCircleReplyIcon className="size-3 lg:size-4" />
               </>
             )}
           </Button>
           <Button
             variant={"outline"}
-            title="Download conversation as markdown"
+            title={t("Download conversation as markdown")}
             className="text-[10px] lg:text-sm h-6 lg:h-8"
             onClick={(e) => handleDownload(messages, e)}
             disabled={isDownloaded}
@@ -120,23 +123,23 @@ const View = () => {
             {isDownloaded ? (
               <>
                 <Check className="size-3 lg:size-4 text-green-600" />
-                Downloaded
+                {t("Downloaded")}
               </>
             ) : (
               <>
-                Download <Download className="size-3 lg:size-4" />
+                {t("Download")} <Download className="size-3 lg:size-4" />
               </>
             )}
           </Button>
           <Button
             variant="destructive"
-            title="Delete conversation"
+            title={t("Delete conversation")}
             onClick={() =>
               conversationId && handleDeleteConfirm(conversationId)
             }
             className="text-[10px] lg:text-sm h-6 lg:h-8"
           >
-            Delete <Trash2 className="size-3 lg:size-4" />
+            {t("Delete")} <Trash2 className="size-3 lg:size-4" />
           </Button>
         </div>
       }
@@ -230,7 +233,7 @@ const View = () => {
         {completion.error && (
           <div className="px-4 pt-3 pb-0">
             <div className="p-2 bg-destructive/10 border border-destructive/20 rounded text-sm text-destructive">
-              <strong>Error:</strong> {completion.error}
+              <strong>{t("Error:")}</strong> {completion.error}
             </div>
           </div>
         )}
@@ -240,11 +243,11 @@ const View = () => {
             <div className="select-none p-5 z-100 bg-primary/5 border border-primary/20 rounded-xl absolute top-4 left-4 right-4">
               <div className="max-w-sm mx-auto">
                 <p className="text-sm font-medium text-center">
-                  You need an active license to use this feature.
+                  {t("You need an active license to use this feature.")}
                 </p>
 
                 <GetLicense
-                  buttonText="Get License"
+                  buttonText={t("Get License")}
                   buttonClassName="w-full mt-2"
                 />
               </div>
@@ -291,7 +294,7 @@ const View = () => {
 
                 <Textarea
                   ref={completion.inputRef}
-                  placeholder="Type a message..."
+                  placeholder={t("Type a message...")}
                   className="pr-12 pl-2 resize-none pb-12 pt-3"
                   rows={2}
                   value={completion.input}
@@ -303,7 +306,7 @@ const View = () => {
                 <Button
                   size="icon"
                   className="size-7 lg:size-9 rounded-lg lg:rounded-xl absolute right-2 bottom-2"
-                  title="Send message"
+                  title={t("Send message")}
                   onClick={() => completion.submit()}
                   disabled={
                     completion.isLoading ||

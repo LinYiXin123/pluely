@@ -5,6 +5,7 @@ import { updateResponseLength } from "@/lib/storage/response-settings.storage";
 import { useState, useEffect } from "react";
 import { getResponseSettings } from "@/lib";
 import { CheckCircle2 } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 export const ResponseLength = () => {
   const { hasActiveLicense } = useApp();
@@ -44,10 +45,10 @@ export const ResponseLength = () => {
           >
             <div className="space-y-1">
               <h3 className="text-sm lg:text-md font-semibold">
-                {length.title}
+                {t(length.title)}
               </h3>
               <p className="text-[10px] lg:text-xs text-muted-foreground">
-                {length.description}
+                {t(length.description)}
               </p>
             </div>
             {selectedLength === length.id && (

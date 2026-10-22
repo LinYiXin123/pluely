@@ -5,6 +5,7 @@ import {
 } from "./components";
 import { PageLayout } from "@/layouts";
 import { useApp } from "@/contexts";
+import { t } from "@/lib/i18n";
 
 const Responses = () => {
   const { hasActiveLicense } = useApp();
@@ -17,12 +18,12 @@ const Responses = () => {
       {!hasActiveLicense && (
         <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
           <p className="text-[10px] lg:text-sm text-foreground font-medium mb-2">
-            🔒 Premium Features
+            🔒 {t("Premium Features")}
           </p>
           <p className="text-[10px] lg:text-sm text-muted-foreground">
-            Response customization features (Response Length, Language
-            Selection, and Auto-Scroll Control) require an active license to
-            use.
+            {t(
+              "Response customization features (Response Length, Language Selection, and Auto-Scroll Control) require an active license to use."
+            )}
           </p>
         </div>
       )}

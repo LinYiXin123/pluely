@@ -7,6 +7,7 @@ import { Button } from "@/components";
 import { useApp } from "@/contexts";
 import { floatArrayToWav } from "@/lib/utils";
 import { shouldUsePluelyAPI } from "@/lib/functions/pluely.api";
+import { t } from "@/lib/i18n";
 
 interface AutoSpeechVADProps {
   submit: UseCompletionReturn["submit"];
@@ -46,8 +47,9 @@ const AutoSpeechVADInternal = ({
           console.warn("No speech provider selected");
           setState((prev: any) => ({
             ...prev,
-            error:
-              "No speech provider selected. Please select one in settings.",
+            error: t(
+              "No speech provider selected. Please select one in settings."
+            ),
           }));
           return;
         }
@@ -60,8 +62,9 @@ const AutoSpeechVADInternal = ({
           console.warn("Selected speech provider configuration not found");
           setState((prev: any) => ({
             ...prev,
-            error:
-              "Speech provider configuration not found. Please check your settings.",
+            error: t(
+              "Speech provider configuration not found. Please check your settings."
+            ),
           }));
           return;
         }
@@ -83,7 +86,7 @@ const AutoSpeechVADInternal = ({
         setState((prev: any) => ({
           ...prev,
           error:
-            error instanceof Error ? error.message : "Transcription failed",
+            error instanceof Error ? error.message : t("Transcription failed"),
         }));
       } finally {
         setIsTranscribing(false);

@@ -19,6 +19,7 @@ import {
   generateMessageId,
 } from "@/lib";
 import { Message } from "@/types/completion";
+import { t } from "@/lib/i18n";
 
 // VAD Configuration interface matching Rust
 export interface VadConfig {
@@ -237,7 +238,7 @@ export function useSystemAudio() {
 
             const usePluelyAPI = await shouldUsePluelyAPI();
             if (!selectedSttProvider.provider && !usePluelyAPI) {
-              setError("No speech provider selected.");
+              setError(t("No speech provider selected."));
               return;
             }
 
@@ -246,7 +247,7 @@ export function useSystemAudio() {
             );
 
             if (!providerConfig && !usePluelyAPI) {
-              setError("Speech provider config not found.");
+              setError(t("Speech provider config not found."));
               return;
             }
 
@@ -290,7 +291,7 @@ export function useSystemAudio() {
                   previousMessages
                 );
               } else {
-                setError("Received empty transcription");
+                setError(t("Received empty transcription"));
               }
             } catch (sttError: any) {
               console.error("STT Error:", sttError);
@@ -298,13 +299,13 @@ export function useSystemAudio() {
               setIsPopoverOpen(true);
             }
           } catch (err) {
-            setError("Failed to process speech");
+            setError(t("Failed to process speech"));
           } finally {
             setIsProcessing(false);
           }
         });
       } catch (err) {
-        setError("Failed to setup speech listener");
+        setError(t("Failed to setup speech listener"));
       }
     };
 
@@ -489,7 +490,7 @@ export function useSystemAudio() {
 
         const usePluelyAPI = await shouldUsePluelyAPI();
         if (!selectedAIProvider.provider && !usePluelyAPI) {
-          setError("No AI provider selected.");
+          setError(t("No AI provider selected."));
           return;
         }
 
@@ -497,7 +498,7 @@ export function useSystemAudio() {
           (p) => p.id === selectedAIProvider.provider
         );
         if (!provider && !usePluelyAPI) {
-          setError("AI provider config not found.");
+          setError(t("AI provider config not found."));
           return;
         }
 
@@ -541,7 +542,7 @@ export function useSystemAudio() {
           }));
         }
       } catch (err) {
-        setError("Failed to get AI response");
+        setError(t("Failed to get AI response"));
       } finally {
         setIsAIProcessing(false);
         // No auto-restart - user manually controls when to start next recording
@@ -672,10 +673,10 @@ export function useSystemAudio() {
         await startCapture();
       } else {
         setSetupRequired(true);
-        setError("Permission not granted. Please try the manual steps.");
+        setError(t("Permission not granted. Please try the manual steps."));
       }
     } catch (err) {
-      setError("Failed to request access. Please try the manual steps below.");
+      setError(t("Failed to request access. Please try the manual steps below."));
       setSetupRequired(true);
     }
   }, [startCapture]);

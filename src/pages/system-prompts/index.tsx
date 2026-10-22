@@ -26,6 +26,7 @@ import { CreateEditDialog } from "./CreateEditDialog";
 import { PluelyPrompts } from "./PluelyPrompts";
 import { useState } from "react";
 import { PageLayout } from "@/layouts";
+import { t } from "@/lib/i18n";
 
 const SystemPrompts = () => {
   const {
@@ -180,7 +181,7 @@ const SystemPrompts = () => {
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Search system prompts..."
+            placeholder={t("Search system prompts...")}
             className="pl-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -188,7 +189,7 @@ const SystemPrompts = () => {
         </div>
         <Button variant="default" size="default" onClick={handleCreateClick}>
           <PlusIcon className="size-4" />
-          Create New
+          {t("Create New")}
         </Button>
       </div>
       {filteredPrompts.length === 0 ? (
@@ -252,7 +253,7 @@ const SystemPrompts = () => {
                         }}
                       >
                         <Pencil className="size-4 mr-2" />
-                        Edit
+                        {t("Edit")}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         variant="destructive"
@@ -262,7 +263,7 @@ const SystemPrompts = () => {
                         }}
                       >
                         <Trash2 className="size-4 mr-2" />
-                        Delete
+                        {t("Delete")}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

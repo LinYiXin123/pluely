@@ -10,6 +10,7 @@ import { SparklesIcon } from "lucide-react";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { useApp } from "@/contexts";
+import { t } from "@/lib/i18n";
 
 interface GenerateSystemPromptProps {
   onGenerate: (prompt: string, promptName: string) => void;
@@ -31,7 +32,7 @@ export const GenerateSystemPrompt = ({
 
   const handleGenerate = async () => {
     if (!userPrompt.trim()) {
-      setError("Please describe what you want");
+      setError(t("Please describe what you want"));
       return;
     }
 
@@ -53,7 +54,7 @@ export const GenerateSystemPrompt = ({
       }
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Failed to generate prompt";
+        err instanceof Error ? err.message : t("Failed to generate prompt");
       setError(errorMessage);
       console.error("Error generating system prompt:", err);
     } finally {
@@ -65,12 +66,12 @@ export const GenerateSystemPrompt = ({
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
-          aria-label="Generate with AI"
+          aria-label={t("Generate with AI")}
           size="sm"
           variant="outline"
           className="w-fit"
         >
-          <SparklesIcon className="h-4 w-4" /> Generate with AI
+          <SparklesIcon className="h-4 w-4" /> {t("Generate with AI")}
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -80,15 +81,20 @@ export const GenerateSystemPrompt = ({
       >
         <div className="space-y-3">
           <div>
-            <p className="text-sm font-medium mb-1">Generate a system prompt</p>
+            <p className="text-sm font-medium mb-1">
+              {t("Generate a system prompt")}
+            </p>
             <p className="text-xs text-muted-foreground">
-              Describe the AI behavior you want, and we'll generate a prompt for
-              you.
+              {t(
+                "Describe the AI behavior you want, and we'll generate a prompt for you."
+              )}
             </p>
           </div>
 
           <Textarea
-            placeholder="e.g., I want an AI that helps me with code reviews and focuses on best practices..."
+            placeholder={t(
+              "e.g., I want an AI that helps me with code reviews and focuses on best practices..."
+            )}
             className="min-h-[100px] resize-none border-1 border-input/50 focus:border-primary/50 transition-colors"
             value={userPrompt}
             onChange={(e) => {
@@ -109,23 +115,24 @@ export const GenerateSystemPrompt = ({
               {isGenerating ? (
                 <>
                   <SparklesIcon className="h-4 w-4 animate-pulse" />
-                  Generating...
+                  {t("Generating...")}
                 </>
               ) : (
                 <>
                   <SparklesIcon className="h-4 w-4" />
-                  Generate
+                  {t("Generate")}
                 </>
               )}
             </Button>
           ) : (
             <div className="w-full flex flex-col gap-3">
               <p className="text-sm font-medium text-muted-foreground">
-                You need an active license to use this feature. Click the button
-                below to get a license.
+                {t(
+                  "You need an active license to use this feature. Click the button below to get a license."
+                )}
               </p>
               <GetLicense
-                buttonText="Get License"
+                buttonText={t("Get License")}
                 buttonClassName="w-full"
                 setState={setIsOpen}
               />

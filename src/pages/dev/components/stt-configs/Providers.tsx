@@ -3,6 +3,7 @@ import { UseSettingsReturn } from "@/types";
 import curl2Json, { ResultJSON } from "@bany/curl-to-json";
 import { KeyIcon, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { t } from "@/lib/i18n";
 
 export const Providers = ({
   allSttProviders,
@@ -52,13 +53,13 @@ export const Providers = ({
             const json = curl2Json(provider?.curl);
             return {
               label: provider?.isCustom
-                ? json?.url || "Custom Provider"
-                : provider?.id || "Custom Provider",
+                ? json?.url || t("Custom Provider")
+                : provider?.id || t("Custom Provider"),
               value: provider?.id || "Custom Provider",
               isCustom: provider?.isCustom,
             };
           })}
-          placeholder="Choose your STT provider"
+          placeholder={t("Choose your STT provider")}
           onChange={(value) => {
             onSetSelectedSttProvider({
               provider: value,
@@ -69,23 +70,27 @@ export const Providers = ({
       </div>
       {localSelectedProvider ? (
         <Header
-          title={`Method: ${
-            localSelectedProvider?.method || "Invalid"
-          }, Endpoint: ${localSelectedProvider?.url || "Invalid"}`}
-          description={`If you want to use different url or method, you can always create a custom provider.`}
+          title={t("Method: {method}, Endpoint: {url}", {
+            method: localSelectedProvider?.method || t("Invalid"),
+            url: localSelectedProvider?.url || t("Invalid"),
+          })}
+          description="If you want to use different url or method, you can always create a custom provider."
         />
       ) : null}
       {findKeyAndValue("api_key") ? (
         <div className="space-y-2">
           <Header
             title="API Key"
-            description={`Enter your ${
-              allSttProviders?.find(
-                (p) => p?.id === selectedSttProvider?.provider
-              )?.isCustom
-                ? "Custom Provider"
-                : selectedSttProvider?.provider
-            } API key to authenticate and access STT models. Your key is stored locally and never shared.`}
+            description={t(
+              "Enter your {provider} API key to authenticate and access STT models. Your key is stored locally and never shared.",
+              {
+                provider: allSttProviders?.find(
+                  (p) => p?.id === selectedSttProvider?.provider
+                )?.isCustom
+                  ? t("Custom Provider")
+                  : selectedSttProvider?.provider || "",
+              }
+            )}
           />
 
           <div className="space-y-2">
@@ -140,7 +145,7 @@ export const Providers = ({
                   disabled={isApiKeyEmpty()}
                   size="icon"
                   className="shrink-0 h-11 w-11"
-                  title="Submit API Key"
+                  title={t("Submit API Key")}
                 >
                   <KeyIcon className="h-4 w-4" />
                 </Button>
@@ -161,7 +166,7 @@ export const Providers = ({
                   size="icon"
                   variant="destructive"
                   className="shrink-0 h-11 w-11"
-                  title="Remove API Key"
+                  title={t("Remove API Key")}
                 >
                   <TrashIcon className="h-4 w-4" />
                 </Button>
@@ -182,29 +187,26 @@ export const Providers = ({
               return selectedSttProvider.variables[variable.key] || "";
             };
 
+            const providerLabel =
+              allSttProviders?.find((p) => p?.id === selectedSttProvider?.provider)
+                ?.isCustom
+                ? t("Custom Provider")
+                : selectedSttProvider?.provider || "";
+
             return (
               <div className="space-y-1" key={variable?.key}>
                 <Header
                   title={variable?.value || ""}
-                  description={`add your preferred ${variable?.key?.replace(
-                    /_/g,
-                    " "
-                  )} for ${
-                    allSttProviders?.find(
-                      (p) => p?.id === selectedSttProvider?.provider
-                    )?.isCustom
-                      ? "Custom Provider"
-                      : selectedSttProvider?.provider
-                  }`}
+                  description={t("Add your preferred {name} for {provider}", {
+                    name: variable?.key?.replace(/_/g, " ") || "",
+                    provider: providerLabel,
+                  })}
                 />
                 <TextInput
-                  placeholder={`Enter ${
-                    allSttProviders?.find(
-                      (p) => p?.id === selectedSttProvider?.provider
-                    )?.isCustom
-                      ? "Custom Provider"
-                      : selectedSttProvider?.provider
-                  } ${variable?.key?.replace(/_/g, " ") || "value"}`}
+                  placeholder={t("Enter {provider} {name}", {
+                    provider: providerLabel,
+                    name: variable?.key?.replace(/_/g, " ") || t("value"),
+                  })}
                   value={getVariableValue()}
                   onChange={(value) => {
                     if (!variable?.key || !selectedSttProvider) return;

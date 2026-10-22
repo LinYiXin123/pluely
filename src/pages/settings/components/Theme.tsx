@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components";
+import { t } from "@/lib/i18n";
 
 export const Theme = () => {
   const { theme, transparency, setTheme, onSetTransparency } = useTheme();
@@ -15,11 +16,13 @@ export const Theme = () => {
   return (
     <div id="theme" className="relative space-y-3">
       <Header
-        title={`Theme Customization ${
+        title={
           hasActiveLicense
-            ? ""
-            : " (You need an active license to use this feature)"
-        }`}
+            ? t("Theme Customization")
+            : `${t("Theme Customization")} ${t(
+                "(You need an active license to use this feature)"
+              )}`
+        }
         description="Personalize your experience with custom theme and transparency settings"
         isMainTitle
       />
@@ -37,24 +40,24 @@ export const Theme = () => {
                 {theme === "system" ? (
                   <>
                     <MonitorIcon className="h-4 w-4" />
-                    System
+                    {t("System")}
                   </>
                 ) : theme === "light" ? (
                   <>
                     <SunIcon className="h-4 w-4" />
-                    Light Mode
+                    {t("Light Mode")}
                   </>
                 ) : (
                   <>
                     <MoonIcon className="h-4 w-4" />
-                    Dark Mode
+                    {t("Dark Mode")}
                   </>
                 )}
               </Label>
               <p className="text-xs text-muted-foreground mt-1">
                 {theme === "light"
-                  ? "Using light theme for better visibility in bright environments"
-                  : "Using dark theme for comfortable viewing in low light"}
+                  ? t("Using light theme for better visibility in bright environments")
+                  : t("Using dark theme for comfortable viewing in low light")}
               </p>
             </div>
           </div>
@@ -73,13 +76,13 @@ export const Theme = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setTheme("light")}>
-                Light
+                {t("Light")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("dark")}>
-                Dark
+                {t("Dark")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("system")}>
-                System
+                {t("System")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -109,8 +112,10 @@ export const Theme = () => {
           </div>
 
           <p className="text-xs text-muted-foreground/70">
-            💡 Tip: Higher transparency lets you see through the window, perfect
-            for dark overlay. Changes apply immediately.
+            💡{" "}
+            {t(
+              "Tip: Higher transparency lets you see through the window, perfect for dark overlay. Changes apply immediately."
+            )}
           </p>
         </div>
       </div>

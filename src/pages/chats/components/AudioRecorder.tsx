@@ -4,6 +4,7 @@ import { AudioVisualizer } from "@/pages/app/components/speech/audio-visualizer"
 import { shouldUsePluelyAPI, fetchSTT } from "@/lib";
 import { useApp } from "@/contexts";
 import { StopCircle, Send } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface AudioRecorderProps {
   onTranscriptionComplete: (text: string) => void;
@@ -183,7 +184,7 @@ export const AudioRecorder = ({
           </div>
         ) : (
           <div className="h-full flex items-center justify-center text-sm text-muted-foreground">
-            Initializing...
+            {t("Initializing...")}
           </div>
         )}
       </div>
@@ -202,7 +203,7 @@ export const AudioRecorder = ({
             onClick={handleStop}
             disabled={isTranscribing}
             className="h-8 w-8"
-            title="Stop recording"
+            title={t("Stop recording")}
           >
             <StopCircle className="h-4 w-4" />
           </Button>
@@ -211,7 +212,7 @@ export const AudioRecorder = ({
             onClick={handleSend}
             disabled={isTranscribing}
             className="h-8 w-8"
-            title={isTranscribing ? "Sending..." : "Send to AI"}
+            title={isTranscribing ? t("Sending...") : t("Send to AI")}
           >
             <Send className="h-4 w-4" />
           </Button>

@@ -1,5 +1,6 @@
 import { Switch, Label, Header } from "@/components";
 import { useApp } from "@/contexts";
+import { t } from "@/lib/i18n";
 
 interface AlwaysOnTopToggleProps {
   className?: string;
@@ -24,25 +25,21 @@ export const AlwaysOnTopToggle = ({ className }: AlwaysOnTopToggleProps) => {
           <div>
             <Label className="text-sm font-medium">
               {customizable.alwaysOnTop.isEnabled
-                ? "Disable Always On Top"
-                : "Enable Always On Top"}
+                ? t("Disable Always On Top")
+                : t("Enable Always On Top")}
             </Label>
             <p className="text-xs text-muted-foreground mt-1">
               {customizable.alwaysOnTop.isEnabled
-                ? "Window stays above all other applications (default)"
-                : "Window behaves like normal applications"}
+                ? t("Window stays above all other applications (default)")
+                : t("Window behaves like normal applications")}
             </p>
           </div>
         </div>
         <Switch
           checked={customizable.alwaysOnTop.isEnabled}
           onCheckedChange={handleSwitchChange}
-          title={`Toggle to ${
-            !customizable.alwaysOnTop.isEnabled ? "Enabled" : "Disabled"
-          } always on top`}
-          aria-label={`Toggle to ${
-            customizable.alwaysOnTop.isEnabled ? "Enabled" : "Disabled"
-          } always on top`}
+          title={t("Toggle always on top")}
+          aria-label={t("Toggle always on top")}
         />
       </div>
     </div>

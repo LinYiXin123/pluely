@@ -6,6 +6,7 @@ import {
   EmptyTitle,
 } from "@/components";
 import { Loader2 } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 export const Empty = ({
   icon,
@@ -29,8 +30,8 @@ export const Empty = ({
         <EmptyMedia variant="icon">
           <Icon icon={icon} />
         </EmptyMedia>
-        <EmptyTitle>{title}</EmptyTitle>
-        <EmptyDescription className="-mt-2">{description}</EmptyDescription>
+        <EmptyTitle>{t(title)}</EmptyTitle>
+        <EmptyDescription className="-mt-2">{t(description)}</EmptyDescription>
       </EmptyHeader>
     </EmptyComponent>
   );

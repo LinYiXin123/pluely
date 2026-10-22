@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components";
 import { useWindowResize } from "@/hooks";
+import { t } from "@/lib/i18n";
 
 export const DragButton = () => {
   const { hasActiveLicense } = useApp();
@@ -38,12 +39,12 @@ export const DragButton = () => {
           <div className="flex flex-col gap-2 w-116">
             <div className="flex flex-col gap-1 pb-2">
               <p className="text-md font-medium">
-                You need an active license to use this feature.
+                {t("You need an active license to use this feature.")}
               </p>
               <p className="text-sm font-medium text-muted-foreground">
-                Once you complete your purchase, you'll receive a license key
-                via email. Paste in the Settings → Pluely Access section to
-                activate.
+                {t(
+                  "Once you complete your purchase, you'll receive a license key via email. Paste in the Settings → Pluely Access section to activate."
+                )}
               </p>
             </div>
             <GetLicense setState={setIsOpen} />

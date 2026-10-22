@@ -4,6 +4,7 @@ import { useApp } from "@/contexts";
 import { updateLanguage } from "@/lib/storage/response-settings.storage";
 import { useState, useEffect, useMemo } from "react";
 import { getResponseSettings } from "@/lib";
+import { t } from "@/lib/i18n";
 
 export const LanguageSelector = () => {
   const { hasActiveLicense } = useApp();
@@ -24,7 +25,7 @@ export const LanguageSelector = () => {
 
   const languageOptions = useMemo(() => {
     return LANGUAGES.map((lang) => ({
-      label: `${lang.flag} ${lang.name}`,
+      label: `${lang.flag} ${t(lang.name)}`,
       value: lang.id,
     }));
   }, []);
@@ -42,7 +43,7 @@ export const LanguageSelector = () => {
           selected={selectedLanguage}
           onChange={handleLanguageChange}
           options={languageOptions}
-          placeholder="Select a language"
+          placeholder={t("Select a language")}
           disabled={!hasActiveLicense}
         />
       </div>

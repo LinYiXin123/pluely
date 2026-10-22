@@ -12,6 +12,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorLayout } from "@/layouts";
 import { getPlatform } from "@/lib";
+import { t } from "@/lib/i18n";
 
 const App = () => {
   const { isHidden, systemAudio } = useApp();
@@ -71,7 +72,7 @@ const App = () => {
             <Button
               size={"icon"}
               className="cursor-pointer"
-              title="Open Dev Space"
+              title={t("Open Dev Space")}
               onClick={openDashboard}
             >
               <SparklesIcon className="h-4 w-4" />

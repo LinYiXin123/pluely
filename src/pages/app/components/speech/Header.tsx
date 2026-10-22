@@ -1,5 +1,6 @@
 import { AudioWaveformIcon, MicIcon, LoaderIcon, AlertCircleIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { t } from "@/lib/i18n";
 
 type StatusType = "ready" | "listening" | "recording" | "processing" | "ai-processing" | "error";
 
@@ -87,7 +88,7 @@ export const Header = ({
   return (
     <div>
       <h2 className="font-semibold text-sm">
-        {setupRequired ? "Setup Required" : "Speech Assistant"}
+        {setupRequired ? t("Setup Required") : t("Speech Assistant")}
       </h2>
       {!setupRequired && (
         <div className="flex items-center gap-1.5 mt-1">
@@ -99,10 +100,10 @@ export const Header = ({
             )}
           >
             {statusConfig.icon}
-            {statusConfig.label}
+            {t(statusConfig.label)}
           </span>
           <span className="text-[10px] text-muted-foreground">
-            {isVadMode ? "Auto-detect" : "Manual"} mode
+            {isVadMode ? t("Auto-detect mode") : t("Manual mode")}
           </span>
         </div>
       )}

@@ -14,6 +14,7 @@ import {
 } from "@/lib";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import { t } from "@/lib/i18n";
 
 // Types for completion
 interface AttachedFile {
@@ -179,7 +180,7 @@ export const useChatCompletion = (
         if (!selectedAIProvider.provider && !usePluelyAPI) {
           setState((prev) => ({
             ...prev,
-            error: "Please select an AI provider in settings",
+            error: t("Please select an AI provider in settings"),
           }));
           return;
         }
@@ -190,7 +191,7 @@ export const useChatCompletion = (
         if (!provider && !usePluelyAPI) {
           setState((prev) => ({
             ...prev,
-            error: "Invalid provider selected",
+            error: t("Invalid provider selected"),
           }));
           return;
         }
@@ -359,7 +360,7 @@ export const useChatCompletion = (
             console.error("Failed to save conversation:", error);
             setState((prev) => ({
               ...prev,
-              error: "Failed to save conversation. Please try again.",
+              error: t("Failed to save conversation. Please try again."),
             }));
           }
         }
@@ -595,7 +596,7 @@ export const useChatCompletion = (
         if (!hasActiveLicense) {
           setState((prev) => ({
             ...prev,
-            error: "Selection mode requires an active license",
+            error: t("Selection mode requires an active license"),
           }));
           setIsScreenshotLoading(false);
           screenshotInitiatedByThisContext.current = false;
@@ -607,7 +608,7 @@ export const useChatCompletion = (
     } catch (error) {
       setState((prev) => ({
         ...prev,
-        error: "Failed to capture screenshot. Please try again.",
+        error: t("Failed to capture screenshot. Please try again."),
       }));
       isProcessingScreenshotRef.current = false;
       screenshotInitiatedByThisContext.current = false;

@@ -7,6 +7,7 @@ import {
   formatShortcutKeyForDisplay,
 } from "@/lib";
 import { invoke } from "@tauri-apps/api/core";
+import { t } from "@/lib/i18n";
 
 interface ShortcutRecorderProps {
   onSave: (key: string) => void;
@@ -79,7 +80,7 @@ export const ShortcutRecorder = ({
       if (isMoveWindow) {
         if (["up", "down", "left", "right"].includes(mainKey)) {
           setError(
-            "Arrow keys are automatic for Move Window. Only set modifiers."
+            t("Arrow keys are automatic for Move Window. Only set modifiers.")
           );
           return;
         }
@@ -87,7 +88,9 @@ export const ShortcutRecorder = ({
           setRecordedKeys(keys);
           setError("");
         } else {
-          setError("Must include at least one modifier (Cmd/Ctrl/Alt/Shift)");
+          setError(
+            t("Must include at least one modifier (Cmd/Ctrl/Alt/Shift)")
+          );
         }
       } else {
         if (!["control", "alt", "shift", "meta"].includes(mainKey)) {
@@ -99,7 +102,9 @@ export const ShortcutRecorder = ({
           setError("");
         } else {
           setError(
-            "Must include at least one modifier (Cmd/Ctrl/Alt/Shift) and one key"
+            t(
+              "Must include at least one modifier (Cmd/Ctrl/Alt/Shift) and one key"
+            )
           );
         }
       }
@@ -135,8 +140,8 @@ export const ShortcutRecorder = ({
     if (recordedKeys.length < minKeys) {
       setError(
         isMoveWindow
-          ? "Move Window needs at least one modifier"
-          : "Shortcut must have at least one modifier and one key"
+          ? t("Move Window needs at least one modifier")
+          : t("Shortcut must have at least one modifier and one key")
       );
       return;
     }
@@ -147,7 +152,7 @@ export const ShortcutRecorder = ({
     if (!isMoveWindow) {
       // Validate with frontend
       if (!validateShortcutKey(shortcutKey)) {
-        setError("Invalid shortcut combination");
+        setError(t("Invalid shortcut combination"));
         return;
       }
 
@@ -158,11 +163,11 @@ export const ShortcutRecorder = ({
         });
 
         if (!isValid) {
-          setError("This shortcut combination is not supported");
+          setError(t("This shortcut combination is not supported"));
           return;
         }
       } catch (e) {
-        setError("Failed to validate shortcut");
+        setError(t("Failed to validate shortcut"));
         return;
       }
     }
@@ -179,7 +184,7 @@ export const ShortcutRecorder = ({
   const displayKey =
     recordedKeys.length > 0
       ? formatShortcutKeyForDisplay(recordedKeys.join("+"))
-      : "Waiting for keys...";
+      : t("Waiting for keys...");
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -201,20 +206,20 @@ export const ShortcutRecorder = ({
           variant="default"
           onClick={handleSave}
           disabled={disabled || recordedKeys.length < minKeys}
-          title="Save shortcut"
+          title={t("Save shortcut")}
         >
           <Check className="h-4 w-4" />
-          Save
+          {t("Save")}
         </Button>
         <Button
           size="sm"
           variant="outline"
           onClick={handleCancel}
           disabled={disabled}
-          title="Cancel"
+          title={t("Cancel")}
         >
           <X className="h-4 w-4" />
-          Cancel
+          {t("Cancel")}
         </Button>
       </div>
 
@@ -223,14 +228,16 @@ export const ShortcutRecorder = ({
       {isRecording && !error && (
         <p className="text-xs text-muted-foreground">
           {isMoveWindow
-            ? "Press modifier keys (e.g., Cmd+Shift). Arrow keys work automatically."
-            : "Press a key combination now (e.g., Cmd+Shift+K)"}
+            ? t(
+                "Press modifier keys (e.g., Cmd+Shift). Arrow keys work automatically."
+              )
+            : t("Press a key combination now (e.g., Cmd+Shift+K)")}
         </p>
       )}
 
       {recordedKeys.length >= minKeys && !error && (
         <p className="text-xs text-green-600">
-          ✓ Shortcut captured! Click "Save" to apply.
+          ✓ {t('Shortcut captured! Click "Save" to apply.')}
         </p>
       )}
     </div>

@@ -11,6 +11,7 @@ import {
 } from "@/components";
 import { GenerateSystemPrompt } from "./Generate";
 import { SparklesIcon } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface CreateEditDialogProps {
   isOpen: boolean;
@@ -56,12 +57,12 @@ export const CreateEditDialog = ({
           <div className="flex items-center justify-between">
             <div>
               <DialogTitle>
-                {isEditing ? "Edit System Prompt" : "Create System Prompt"}
+                {isEditing ? t("Edit System Prompt") : t("Create System Prompt")}
               </DialogTitle>
               <DialogDescription className="mt-1">
                 {isEditing
-                  ? "Update your system prompt details below."
-                  : "Define a new AI behavior and personality."}
+                  ? t("Update your system prompt details below.")
+                  : t("Define a new AI behavior and personality.")}
               </DialogDescription>
             </div>
             <GenerateSystemPrompt onGenerate={onGenerate} />
@@ -70,10 +71,10 @@ export const CreateEditDialog = ({
         <div className="space-y-4 py-4 px-6 overflow-y-auto flex-1">
           <div className="space-y-2">
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Name
+              {t("Name")}
             </label>
             <Input
-              placeholder="e.g., Code Review Expert, Creative Writer..."
+              placeholder={t("e.g., Code Review Expert, Creative Writer...")}
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               disabled={isSaving}
@@ -82,18 +83,22 @@ export const CreateEditDialog = ({
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              System Prompt
+              {t("System Prompt")}
             </label>
             <Textarea
-              placeholder="You are a helpful AI assistant. Be concise, accurate, and friendly in your responses..."
+              placeholder={t(
+                "You are a helpful AI assistant. Be concise, accurate, and friendly in your responses..."
+              )}
               className="min-h-[200px] max-h-[400px] resize-none overflow-y-auto"
               value={form.prompt}
               onChange={(e) => setForm({ ...form, prompt: e.target.value })}
               disabled={isSaving}
             />
             <p className="text-xs text-muted-foreground/70">
-              💡 Tip: Be specific about tone, expertise level, and response
-              format
+              💡{" "}
+              {t(
+                "Tip: Be specific about tone, expertise level, and response format"
+              )}
             </p>
           </div>
         </div>
@@ -103,18 +108,18 @@ export const CreateEditDialog = ({
             onClick={() => onOpenChange(false)}
             disabled={isSaving}
           >
-            Cancel
+            {t("Cancel")}
           </Button>
           <Button onClick={handleSave} disabled={!isFormValid || isSaving}>
             {isSaving ? (
               <>
                 <SparklesIcon className="h-4 w-4 animate-pulse" />
-                {isEditing ? "Updating..." : "Creating..."}
+                {isEditing ? t("Updating...") : t("Creating...")}
               </>
             ) : isEditing ? (
-              "Update"
+              t("Update")
             ) : (
-              "Create"
+              t("Create")
             )}
           </Button>
         </DialogFooter>

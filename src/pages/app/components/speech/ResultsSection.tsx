@@ -2,6 +2,7 @@ import { ChatConversation } from "@/types";
 import { Markdown, Switch, CopyButton } from "@/components";
 import { BotIcon, HeadphonesIcon, Loader2, SparklesIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { t } from "@/lib/i18n";
 
 type Props = {
   lastTranscription: string;
@@ -37,7 +38,7 @@ export const ResultsSection = ({
         <div className="flex items-center gap-1.5">
           <SparklesIcon className="w-3.5 h-3.5 text-primary" />
           <h4 className="text-xs font-medium">
-            {conversationMode ? "Conversation" : "AI Response"}
+            {conversationMode ? t("Conversation") : t("AI Response")}
           </h4>
         </div>
         <div className="flex items-center gap-2 select-none">
@@ -59,7 +60,8 @@ export const ResultsSection = ({
           {/* System Input - Just text with bold label */}
           {lastTranscription && (
             <p className="text-[11px] text-muted-foreground">
-              <span className="font-semibold">System:</span> {lastTranscription}
+              <span className="font-semibold">{t("System:")}</span>{" "}
+              {lastTranscription}
             </p>
           )}
 
@@ -70,7 +72,7 @@ export const ResultsSection = ({
                 <div className="flex items-center gap-2 py-2">
                   <Loader2 className="h-4 w-4 animate-spin text-primary" />
                   <span className="text-xs text-muted-foreground">
-                    Generating response...
+                    {t("Generating response...")}
                   </span>
                 </div>
               ) : (
@@ -102,7 +104,7 @@ export const ResultsSection = ({
                 <div className="flex items-center gap-2">
                   <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
                   <span className="text-[10px] text-muted-foreground">
-                    Generating...
+                    {t("Generating...")}
                   </span>
                 </div>
               ) : (
@@ -122,7 +124,7 @@ export const ResultsSection = ({
               <div className="flex items-center gap-1.5 mb-1">
                 <HeadphonesIcon className="h-3 w-3 text-primary" />
                 <span className="text-[9px] font-medium text-primary uppercase tracking-wide">
-                  System
+                  {t("System audio")}
                 </span>
               </div>
               <p className="text-sm">{lastTranscription}</p>
@@ -133,7 +135,7 @@ export const ResultsSection = ({
           {hasHistory && (
             <div className="space-y-2 pt-2 border-t border-border/50">
               <p className="text-[9px] text-muted-foreground uppercase tracking-wide">
-                Previous
+                {t("Previous")}
               </p>
               <div className="space-y-1.5 max-h-40 overflow-y-auto">
                 {conversation.messages
@@ -150,7 +152,7 @@ export const ResultsSection = ({
                       )}
                     >
                       <span className="text-[8px] font-medium text-muted-foreground uppercase">
-                        {message.role === "user" ? "System" : "AI"}
+                        {message.role === "user" ? t("System audio") : "AI"}
                       </span>
                       <div className="text-muted-foreground leading-relaxed mt-0.5">
                         <Markdown>{message.content}</Markdown>

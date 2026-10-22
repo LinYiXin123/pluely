@@ -17,6 +17,7 @@ import {
 } from "@/lib";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import { t } from "@/lib/i18n";
 
 // Types for completion
 interface AttachedFile {
@@ -184,7 +185,7 @@ export const useCompletion = () => {
         if (!selectedAIProvider.provider && !usePluelyAPI) {
           setState((prev) => ({
             ...prev,
-            error: "Please select an AI provider in settings",
+            error: t("Please select an AI provider in settings"),
           }));
           return;
         }
@@ -195,7 +196,7 @@ export const useCompletion = () => {
         if (!provider && !usePluelyAPI) {
           setState((prev) => ({
             ...prev,
-            error: "Invalid provider selected",
+            error: t("Invalid provider selected"),
           }));
           return;
         }
@@ -430,7 +431,7 @@ export const useCompletion = () => {
         // Show error to user
         setState((prev) => ({
           ...prev,
-          error: "Failed to save conversation. Please try again.",
+          error: t("Failed to save conversation. Please try again."),
         }));
       }
     },
@@ -448,7 +449,7 @@ export const useCompletion = () => {
         console.error("No conversation ID provided");
         setState((prev) => ({
           ...prev,
-          error: "Invalid conversation selected",
+          error: t("Invalid conversation selected"),
         }));
         return;
       }
@@ -463,14 +464,14 @@ export const useCompletion = () => {
           console.error(`Conversation ${id} not found in database`);
           setState((prev) => ({
             ...prev,
-            error: "Conversation not found. It may have been deleted.",
+            error: t("Conversation not found. It may have been deleted."),
           }));
         }
       } catch (error) {
         console.error("Failed to load conversation:", error);
         setState((prev) => ({
           ...prev,
-          error: "Failed to load conversation. Please try again.",
+          error: t("Failed to load conversation. Please try again."),
         }));
       }
     };
@@ -587,7 +588,7 @@ export const useCompletion = () => {
             if (!selectedAIProvider.provider && !usePluelyAPI) {
               setState((prev) => ({
                 ...prev,
-                error: "Please select an AI provider in settings",
+                error: t("Please select an AI provider in settings"),
               }));
               return;
             }
@@ -598,7 +599,7 @@ export const useCompletion = () => {
             if (!provider && !usePluelyAPI) {
               setState((prev) => ({
                 ...prev,
-                error: "Invalid provider selected",
+                error: t("Invalid provider selected"),
               }));
               return;
             }
@@ -905,7 +906,7 @@ export const useCompletion = () => {
     } catch (error) {
       setState((prev) => ({
         ...prev,
-        error: "Failed to capture screenshot. Please try again.",
+        error: t("Failed to capture screenshot. Please try again."),
       }));
       isProcessingScreenshotRef.current = false;
       screenshotInitiatedByThisContext.current = false;

@@ -3,6 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger, Button } from "@/components";
 import { AutoSpeechVAD } from "./AutoSpeechVad";
 import { UseCompletionReturn } from "@/types";
 import { useApp } from "@/contexts";
+import { t } from "@/lib/i18n";
 
 export const Audio = ({
   micOpen,
@@ -35,7 +36,7 @@ export const Audio = ({
               setEnableVAD(!enableVAD);
             }}
             className="cursor-pointer"
-            title="Toggle voice input"
+            title={t("Toggle voice input")}
           >
             <MicIcon className="h-4 w-4" />
           </Button>
@@ -52,7 +53,7 @@ export const Audio = ({
       >
         <div className="text-sm select-none">
           <div className="font-semibold text-orange-600 mb-1">
-            Speech Provider Configuration Required
+            {t("Speech Provider Configuration Required")}
           </div>
           <p className="text-muted-foreground">
             {!speechProviderStatus ? (
@@ -60,13 +61,14 @@ export const Audio = ({
                 <div className="mt-2 flex flex-row gap-1 items-center text-orange-600">
                   <InfoIcon size={16} />
                   {selectedSttProvider.provider ? null : (
-                    <p>PROVIDER IS MISSING</p>
+                    <p>{t("PROVIDER IS MISSING")}</p>
                   )}
                 </div>
 
                 <span className="block mt-2">
-                  Please go to settings and configure your speech provider to
-                  enable voice input.
+                  {t(
+                    "Please go to settings and configure your speech provider to enable voice input."
+                  )}
                 </span>
               </>
             ) : null}

@@ -2,6 +2,7 @@ import { Check, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCopyToClipboard } from "@/hooks";
 import { Button } from "@/components/ui/button";
+import { t } from "@/lib/i18n";
 
 type CopyButtonProps = {
   content: string;
@@ -19,7 +20,7 @@ export function CopyButton({ content, copyMessage }: CopyButtonProps) {
       variant="ghost"
       size="icon"
       className="relative h-6 w-6"
-      aria-label="Copy to clipboard"
+      aria-label={t("Copy to clipboard")}
       onClick={handleCopy}
     >
       <div className="absolute inset-0 flex items-center justify-center">

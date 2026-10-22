@@ -2,6 +2,7 @@ import { Button } from "@/components";
 import { LaptopMinimalIcon, Loader2, MousePointer2Icon } from "lucide-react";
 import { MAX_FILES } from "@/config";
 import { useApp } from "@/contexts";
+import { t } from "@/lib/i18n";
 
 interface ChatScreenshotProps {
   screenshotConfiguration: any;
@@ -22,9 +23,10 @@ export const ChatScreenshot = ({
 }: ChatScreenshotProps) => {
   const { supportsImages } = useApp();
   const captureMode = screenshotConfiguration.enabled
-    ? "Screenshot"
-    : "Selection";
-  const processingMode = screenshotConfiguration.mode;
+    ? t("Screenshot Mode")
+    : t("Selection Mode");
+  const processingMode =
+    screenshotConfiguration.mode === "auto" ? t("Auto") : t("Manual");
 
   return (
     <Button
@@ -33,8 +35,11 @@ export const ChatScreenshot = ({
       className="size-7 lg:size-9 rounded-lg lg:rounded-xl"
       title={
         !supportsImages
-          ? "Screenshot not supported by current AI provider"
-          : `${captureMode} mode (${processingMode}) - ${attachedFiles.length}/${MAX_FILES} files`
+          ? t("Screenshot not supported by current AI provider")
+          : `${captureMode} (${processingMode}) - ${t("{count}/{max} files", {
+              count: attachedFiles.length,
+              max: MAX_FILES,
+            })}`
       }
       onClick={captureScreenshot}
       disabled={

@@ -11,6 +11,7 @@ import { PlusIcon, SaveIcon } from "lucide-react";
 import { useCustomAiProviders } from "@/hooks";
 import { useApp } from "@/contexts";
 import { cn } from "@/lib/utils";
+import { t } from "@/lib/i18n";
 
 interface CreateEditProviderProps {
   customProviderHook?: ReturnType<typeof useCustomAiProviders>;
@@ -47,13 +48,13 @@ export const CreateEditProvider = ({
           className="w-full h-11 border-1 border-input/50 focus:border-primary/50 transition-colors"
         >
           <PlusIcon className="h-4 w-4 mr-2" />
-          Add Custom Provider
+          {t("Add Custom Provider")}
         </Button>
       ) : (
         <Card className="p-4 border !bg-transparent border-input/50 ">
           <div className="flex justify-between items-center">
             <Header
-              title={editingProvider ? `Edit Provider` : "Add Custom Provider"}
+              title={editingProvider ? t("Edit Provider") : t("Add Custom Provider")}
               description="Create a custom AI provider to use with your AI-powered applications."
             />
 
@@ -67,7 +68,7 @@ export const CreateEditProvider = ({
                       value: provider?.id || "AI Provider",
                     };
                   })}
-                placeholder={"Auto-fill"}
+                placeholder={t("Auto-fill")}
                 onChange={(value) => {
                   handleAutoFill(value);
                 }}
@@ -127,22 +128,24 @@ export const CreateEditProvider = ({
               <div className="bg-muted/50 p-4 rounded-lg space-y-4">
                 <div className="bg-card border p-3 rounded-lg">
                   <p className="text-sm font-medium text-primary mb-2">
-                    💡 Important: You can add custom variables or directly
-                    include your API keys/values
+                    💡{" "}
+                    {t(
+                      "Important: You can add custom variables or directly include your API keys/values"
+                    )}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    No need to enter variables separately when selecting the
-                    provider - you can embed them directly in the curl command
-                    (e.g., replace YOUR_API_KEY with your actual key or use{" "}
+                    {t(
+                      "No need to enter variables separately when selecting the provider - you can embed them directly in the curl command (e.g., replace YOUR_API_KEY with your actual key or use"
+                    )}{" "}
                     <code className="bg-muted px-1 rounded text-xs">
                       {"{{MODEL}}"}
                     </code>{" "}
-                    for model name).
+                    {t("for model name).")}
                   </p>
                 </div>
 
                 <h4 className="text-sm font-semibold text-foreground">
-                  ⚠️ Required Variables for AI Providers:
+                  ⚠️ {t("Required Variables for AI Providers:")}
                 </h4>
                 <div className="grid grid-cols-1 gap-3 text-sm">
                   <div className="flex items-center gap-3 p-3 bg-card border rounded-lg">
@@ -150,7 +153,7 @@ export const CreateEditProvider = ({
                       {"{{TEXT}}"}
                     </code>
                     <span className="text-foreground font-medium">
-                      → REQUIRED: User's text input
+                      → {t("REQUIRED: User's text input")}
                     </span>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-card border rounded-lg">
@@ -158,8 +161,10 @@ export const CreateEditProvider = ({
                       {"{{IMAGE}}"}
                     </code>
                     <span className="text-muted-foreground">
-                      → Base64 image data (without data:image/jpeg;base64
-                      prefix)
+                      →{" "}
+                      {t(
+                        "Base64 image data (without data:image/jpeg;base64 prefix)"
+                      )}
                     </span>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-card border rounded-lg">
@@ -167,33 +172,36 @@ export const CreateEditProvider = ({
                       {"{{SYSTEM_PROMPT}}"}
                     </code>
                     <span className="text-muted-foreground">
-                      → System prompt/instructions(optional)
+                      → {t("System prompt/instructions(optional)")}
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <p className="text-sm text-muted-foreground">
-                    <strong className="text-foreground">Quick Setup:</strong>{" "}
-                    Replace{" "}
+                    <strong className="text-foreground">
+                      {t("Quick Setup:")}
+                    </strong>{" "}
+                    {t("Replace")}{" "}
                     <code className="bg-muted px-1 rounded text-xs">
                       YOUR_API_KEY
                     </code>{" "}
-                    with your actual API key directly in the curl command.
+                    {t("with your actual API key directly in the curl command.")}
                   </p>
                   <p className="text-sm text-muted-foreground">
                     <strong className="text-foreground">
-                      Custom Variables:
+                      {t("Custom Variables:")}
                     </strong>{" "}
-                    You can add your own variables using the same{" "}
+                    {t("You can add your own variables using the same")}{" "}
                     <code className="bg-muted px-1 rounded text-xs">
                       {"{{VARIABLE_NAME}}"}
                     </code>{" "}
-                    format and they'll be available for configuration when you
-                    select this provider.
+                    {t(
+                      "format and they'll be available for configuration when you select this provider."
+                    )}
                   </p>
                   <p className="text-xs text-muted-foreground italic">
-                    💡 Tip: Use the required variables (
+                    💡 {t("Tip: Use the required variables (")}
                     <code className="bg-muted px-1 rounded text-xs">
                       {"{{TEXT}}"}
                     </code>
@@ -201,11 +209,11 @@ export const CreateEditProvider = ({
                     <code className="bg-muted px-1 rounded text-xs">
                       {"{{SYSTEM_PROMPT}}"}
                     </code>
-                    ) for basic functionality. Add{" "}
+                    ) {t("for basic functionality. Add")}{" "}
                     <code className="bg-muted px-1 rounded text-xs">
                       {"{{IMAGE}}"}
                     </code>{" "}
-                    only if your provider supports image input.
+                    {t("only if your provider supports image input.")}
                   </p>
                 </div>
               </div>
@@ -244,7 +252,9 @@ export const CreateEditProvider = ({
                 }))
               }
               error={errors.responseContentPath}
-              notes="The path to extract content from the API response. Examples: choices[0].message.content, text, candidates[0].content.parts[0].text"
+              notes={t(
+                "The path to extract content from the API response. Examples: choices[0].message.content, text, candidates[0].content.parts[0].text"
+              )}
             />
           </div>
 
@@ -254,7 +264,7 @@ export const CreateEditProvider = ({
               onClick={() => setShowForm(!showForm)}
               className="h-11 border-1 border-input/50 focus:border-primary/50 transition-colors"
             >
-              Cancel
+              {t("Cancel")}
             </Button>
             <Button
               onClick={handleSave}
@@ -265,11 +275,11 @@ export const CreateEditProvider = ({
               )}
             >
               {errors.curl ? (
-                "Invalid cURL, try again"
+                t("Invalid cURL, try again")
               ) : (
                 <>
                   <SaveIcon className="h-4 w-4 mr-2" />
-                  {editingProvider ? "Update" : "Save"} Provider
+                  {editingProvider ? t("Update Provider") : t("Save Provider")}
                 </>
               )}
             </Button>

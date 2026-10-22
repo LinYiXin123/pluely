@@ -9,6 +9,7 @@ import {
 } from "@/components";
 import { AlertTriangle } from "lucide-react";
 import { useState } from "react";
+import { t } from "@/lib/i18n";
 
 interface DeleteSystemPromptProps {
   isOpen: boolean;
@@ -50,17 +51,20 @@ export const DeleteSystemPrompt = ({
               <AlertTriangle className="h-5 w-5 text-destructive" />
             </div>
             <div className="flex-1">
-              <DialogTitle>Delete System Prompt</DialogTitle>
+              <DialogTitle>{t("Delete System Prompt")}</DialogTitle>
               <DialogDescription className="mt-1">
-                Are you sure you want to delete "{promptName}"?
+                {t('Are you sure you want to delete "{name}"?', {
+                  name: promptName,
+                })}
               </DialogDescription>
             </div>
           </div>
         </DialogHeader>
         <div className="py-3">
           <p className="text-sm text-muted-foreground">
-            This action cannot be undone. This will permanently delete the
-            system prompt from the database.
+            {t(
+              "This action cannot be undone. This will permanently delete the system prompt from the database."
+            )}
           </p>
         </div>
         <DialogFooter>
@@ -69,14 +73,14 @@ export const DeleteSystemPrompt = ({
             onClick={() => onOpenChange(false)}
             disabled={isDeleting}
           >
-            Cancel
+            {t("Cancel")}
           </Button>
           <Button
             variant="destructive"
             onClick={handleConfirmDelete}
             disabled={isDeleting}
           >
-            {isDeleting ? "Deleting..." : "Delete"}
+            {isDeleting ? t("Deleting...") : t("Delete")}
           </Button>
         </DialogFooter>
       </DialogContent>

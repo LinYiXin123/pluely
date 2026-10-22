@@ -14,6 +14,7 @@ import { ShortcutAction, ShortcutBinding } from "@/types";
 import { invoke } from "@tauri-apps/api/core";
 import { useApp } from "@/contexts";
 import { ShortcutRecorder } from "./ShortcutRecorder";
+import { t } from "@/lib/i18n";
 
 export const ShortcutManager = () => {
   const { hasActiveLicense } = useApp();
@@ -54,9 +55,12 @@ export const ShortcutManager = () => {
     const conflict = checkShortcutConflicts(key, actionId);
     if (conflict) {
       setConflicts([
-        `Shortcut "${key}" is already used by: ${conflict.actions
-          .map((id) => actions.find((a) => a.id === id)?.name)
-          .join(", ")}`,
+        t('Shortcut "{key}" is already used by: {actions}', {
+          key,
+          actions: conflict.actions
+            .map((id) => t(actions.find((a) => a.id === id)?.name || ""))
+            .join(", "),
+        }),
       ]);
       return;
     }
@@ -91,7 +95,7 @@ export const ShortcutManager = () => {
       });
     } catch (error) {
       console.error("Failed to apply shortcuts:", error);
-      setConflicts([`Failed to apply shortcuts: ${error}`]);
+      setConflicts([`${t("Failed to apply shortcuts:")} ${error}`]);
     } finally {
       setIsApplying(false);
     }
@@ -112,7 +116,7 @@ export const ShortcutManager = () => {
       loadShortcuts();
     } catch (error) {
       console.error("Failed to reset shortcuts:", error);
-      setConflicts(["Failed to reset shortcuts. Please try again."]);
+      setConflicts([t("Failed to reset shortcuts. Please try again.")]);
     } finally {
       setIsApplying(false);
     }
@@ -125,12 +129,12 @@ export const ShortcutManager = () => {
         <div>
           <h3 className="text-md lg:text-lg font-semibold flex items-center gap-2">
             <Keyboard className="size-5 lg:size-5" />
-            Keyboard Shortcuts
+            {t("Keyboard Shortcuts")}
           </h3>
           <p className="text-sm text-muted-foreground">
-            {actions.length} shortcut{actions.length !== 1 ? "s" : ""}{" "}
-            configured
-            {!hasActiveLicense && " • Get a license to customize shortcuts"}
+            {t("{count} shortcuts configured", { count: actions.length })}
+            {!hasActiveLicense &&
+              ` • ${t("Get a license to customize shortcuts")}`}
           </p>
         </div>
         <div className="flex gap-2">
@@ -152,10 +156,10 @@ export const ShortcutManager = () => {
             variant="outline"
             onClick={handleReset}
             disabled={isApplying}
-            title="Reset all shortcuts to platform defaults"
+            title={t("Reset all shortcuts to platform defaults")}
           >
             <RotateCcw className="size-3 lg:size-4" />
-            Reset
+            {t("Reset")}
           </Button>
         </div>
       </div>
@@ -183,14 +187,15 @@ export const ShortcutManager = () => {
             <Lock className="size-4 lg:size-5 text-primary mt-0.5" />
             <div className="flex-1 space-y-2">
               <p className="text-xs lg:text-sm font-medium">
-                Unlock Shortcut Customization
+                {t("Unlock Shortcut Customization")}
               </p>
               <p className="text-[10px] lg:text-xs text-muted-foreground">
-                You can enable/disable shortcuts, but need a active license to
-                customize the key bindings.
+                {t(
+                  "You can enable/disable shortcuts, but need a active license to customize the key bindings."
+                )}
               </p>
               <GetLicense
-                buttonText="Get License"
+                buttonText={t("Get License")}
                 buttonClassName="w-full mt-2"
               />
             </div>
@@ -221,10 +226,10 @@ export const ShortcutManager = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-xs lg:text-sm">
-                      {action.name}
+                      {t(action.name)}
                     </p>
                     <p className="text-[10px] lg:text-xs text-muted-foreground">
-                      {action.description}
+                      {t(action.description)}
                     </p>
                   </div>
                   <ShortcutRecorder
@@ -253,14 +258,14 @@ export const ShortcutManager = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <p className="font-medium text-xs lg:text-sm">
-                        {action.name}
+                        {t(action.name)}
                       </p>
                       {isLocked && (
                         <Lock className="size-3 lg:size-4 text-muted-foreground" />
                       )}
                     </div>
                     <p className="text-[10px] lg:text-xs text-muted-foreground">
-                      {action.description}
+                      {t(action.description)}
                     </p>
                   </div>
 
@@ -284,11 +289,11 @@ export const ShortcutManager = () => {
                       className="min-w-[80px]"
                       title={
                         isLocked
-                          ? "License required to customize"
-                          : "Change this shortcut"
+                          ? t("License required to customize")
+                          : t("Change this shortcut")
                       }
                     >
-                      Change
+                      {t("Change")}
                     </Button>
                   </div>
                 </div>
@@ -300,7 +305,7 @@ export const ShortcutManager = () => {
 
       {/* Footer Note */}
       <p className="text-xs text-muted-foreground text-center pt-2">
-        💡 Shortcuts work globally, even when the app is hidden
+        💡 {t("Shortcuts work globally, even when the app is hidden")}
       </p>
     </div>
   );

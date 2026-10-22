@@ -4,6 +4,7 @@ import { PageLayout } from "@/layouts";
 import { MessageCircleIcon, Search } from "lucide-react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { t } from "@/lib/i18n";
 
 const Dashboard = () => {
   const conversations = useHistory();
@@ -45,7 +46,7 @@ const Dashboard = () => {
               <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search conversations..."
+                placeholder={t("Search conversations...")}
                 className="pl-9 focus-visible:ring-0 focus-visible:ring-offset-0"
                 value={conversations.search}
                 onChange={(e) => conversations.setSearch(e.target.value)}
@@ -79,7 +80,9 @@ const Dashboard = () => {
                           </p>
                           <div className="flex items-center gap-1">
                             <Badge variant="outline" className="text-xs">
-                              {doc.messages.length} messages
+                              {t("{count} messages", {
+                                count: doc.messages.length,
+                              })}
                             </Badge>
                             <Badge variant="outline" className="text-xs">
                               {moment(doc.updatedAt).format("hh:mm A")}

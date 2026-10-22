@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/chart";
 import { RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { t } from "@/lib/i18n";
 
 const formatNumber = (num: number): string => {
   if (num >= 1_000_000_000) {
@@ -41,10 +42,10 @@ export function Usage({
 }) {
   const chartConfig = {
     views: {
-      label: "Requests",
+      label: t("Requests"),
     },
     requests: {
-      label: "Requests",
+      label: t("Requests"),
       color: "var(--chart-1)",
     },
   } satisfies ChartConfig;
@@ -57,9 +58,9 @@ export function Usage({
       <CardHeader className="flex flex-row items-stretch border-b !p-0 ">
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-1 flex-col justify-center gap-1 px-6 pb-0">
-            <CardTitle className="text-md lg:text-lg">Pluely Usage</CardTitle>
+            <CardTitle className="text-md lg:text-lg">{t("Pluely Usage")}</CardTitle>
             <CardDescription className="text-xs lg:text-sm">
-              Your current monthly usage of Pluely's API
+              {t("Your current monthly usage of Pluely's API")}
             </CardDescription>
           </div>
 
@@ -75,11 +76,11 @@ export function Usage({
         <div className="flex flex-1">
           {[
             {
-              label: "Total Requests",
+              label: t("Total Requests"),
               value: data.reduce((acc, curr) => acc + curr.requests, 0),
             },
             {
-              label: "Total Tokens",
+              label: t("Total Tokens"),
               value: totalTokens,
             },
           ].map((key, index) => {

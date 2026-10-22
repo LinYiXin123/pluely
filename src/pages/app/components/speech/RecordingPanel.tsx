@@ -1,5 +1,6 @@
 import { Button } from "@/components";
 import { MicIcon, StopCircleIcon, XIcon, Loader2 } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface RecordingPanelProps {
   isVadMode: boolean;
@@ -36,7 +37,7 @@ export const RecordingPanel = ({
             <div className="flex items-center justify-end gap-1.5">
               <Loader2 className="w-3 h-3 animate-spin text-muted-foreground" />
               <span className="text-[9px] text-muted-foreground">
-                {isProcessing ? "Transcribing..." : "Generating..."}
+                {isProcessing ? t("Transcribing...") : t("Generating...")}
               </span>
             </div>
           )}
@@ -52,7 +53,7 @@ export const RecordingPanel = ({
                     size="sm"
                   >
                     <MicIcon className="w-3.5 h-3.5" />
-                    Start Recording
+                    {t("Start Recording")}
                   </Button>
                 ) : (
                   <>
@@ -63,7 +64,7 @@ export const RecordingPanel = ({
                       className="flex-1 gap-1"
                     >
                       <XIcon className="w-3 h-3" />
-                      Discard
+                      {t("Discard")}
                     </Button>
                     <Button
                       onClick={onStopAndSend}
@@ -71,7 +72,7 @@ export const RecordingPanel = ({
                       className="flex-1 gap-1"
                     >
                       <StopCircleIcon className="w-3 h-3" />
-                      Stop & Send
+                      {t("Stop & Send")}
                     </Button>
                   </>
                 )}
@@ -91,9 +92,9 @@ export const RecordingPanel = ({
                   <div className="flex justify-between text-[9px] text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                      Recording {recordingProgress}s
+                      {t("Recording {seconds}s", { seconds: recordingProgress })}
                     </span>
-                    <span>{maxDuration}s max</span>
+                    <span>{t("{seconds}s max", { seconds: maxDuration })}</span>
                   </div>
                 </div>
               )}
@@ -109,7 +110,7 @@ export const RecordingPanel = ({
                     <kbd className="px-1 py-0.5 rounded bg-muted font-mono">
                       Enter
                     </kbd>{" "}
-                    start
+                    {t("start")}
                   </span>
                 ) : (
                   <>
@@ -117,13 +118,13 @@ export const RecordingPanel = ({
                       <kbd className="px-1 py-0.5 rounded bg-muted font-mono">
                         Enter
                       </kbd>{" "}
-                      send
+                      {t("send")}
                     </span>
                     <span>
                       <kbd className="px-1 py-0.5 rounded bg-muted font-mono">
                         Esc
                       </kbd>{" "}
-                      discard
+                      {t("discard")}
                     </span>
                   </>
                 )}

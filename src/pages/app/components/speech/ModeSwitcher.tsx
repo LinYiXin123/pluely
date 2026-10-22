@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { AudioWaveformIcon, MicIcon } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface ModeSwitcherProps {
   isVadMode: boolean;
@@ -32,9 +33,11 @@ export const ModeSwitcher = ({
       >
         <AudioWaveformIcon className="w-4 h-4 flex-shrink-0" />
         <div className="flex flex-col items-start">
-          <span className="text-xs font-medium leading-tight">Auto-detect</span>
+          <span className="text-xs font-medium leading-tight">
+            {t("Auto-detect")}
+          </span>
           <span className="text-[9px] font-normal opacity-60 leading-tight">
-            (voice activity)
+            {t("(voice activity)")}
           </span>
         </div>
       </button>
@@ -51,9 +54,11 @@ export const ModeSwitcher = ({
       >
         <MicIcon className="w-4 h-4 flex-shrink-0" />
         <div className="flex flex-col items-start">
-          <span className="text-xs font-medium leading-tight">Manual</span>
+          <span className="text-xs font-medium leading-tight">
+            {t("Manual")}
+          </span>
           <span className="text-[9px] font-normal opacity-60 leading-tight">
-            (press to record)
+            {t("(press to record)")}
           </span>
         </div>
       </button>
