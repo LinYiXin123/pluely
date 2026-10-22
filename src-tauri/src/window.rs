@@ -2,6 +2,8 @@
 use tauri::LogicalPosition;
 use tauri::{App, AppHandle, Manager, Runtime, WebviewWindow, WebviewWindowBuilder};
 
+use crate::stealth::STEALTH_MODE;
+
 // The offset from the top of the screen to the window
 const TOP_OFFSET: i32 = 54;
 
@@ -16,6 +18,17 @@ pub fn setup_main_window(app: &mut App) -> Result<(), Box<dyn std::error::Error>
             app.webview_windows().values().next().cloned()
         })
         .ok_or("No window found")?;
+
+    if !STEALTH_MODE {
+        // Development mode: a normal window with title bar, minimize button
+        // and taskbar icon, visible to screenshots and screen sharing
+        window.set_content_protected(false)?;
+        window.set_skip_taskbar(false)?;
+        window.set_decorations(true)?;
+        window.set_shadow(true)?;
+        // Adding the title bar can shrink the content area, so restore it
+        window.set_size(tauri::Size::Logical(tauri::LogicalSize::new(600.0, 54.0)))?;
+    }
 
     position_window_top_center(&window, TOP_OFFSET)?;
 
@@ -162,7 +175,7 @@ pub fn create_dashboard_window<R: Runtime>(
         .min_inner_size(800.0, 600.0)
         .hidden_title(true)
         .title_bar_style(tauri::TitleBarStyle::Overlay)
-        .content_protected(true)
+        .content_protected(STEALTH_MODE)
         .visible(true)
         .traffic_light_position(LogicalPosition::new(14.0, 18.0));
 
@@ -173,7 +186,7 @@ pub fn create_dashboard_window<R: Runtime>(
         .decorations(true)
         .inner_size(800.0, 600.0)
         .min_inner_size(800.0, 600.0)
-        .content_protected(true)
+        .content_protected(STEALTH_MODE)
         .visible(false);
 
     let window = base_builder.build()?;

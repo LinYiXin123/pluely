@@ -4,6 +4,7 @@ mod api;
 mod capture;
 mod db;
 mod shortcuts;
+mod stealth;
 mod window;
 use std::sync::{Arc, Mutex};
 use tauri::{AppHandle, Manager, WebviewWindow};

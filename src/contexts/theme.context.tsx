@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { STORAGE_KEYS } from "@/config/";
+import { STEALTH_MODE, STORAGE_KEYS } from "@/config/";
 
 type Theme = "dark" | "light" | "system";
 
@@ -36,7 +36,7 @@ export function ThemeProvider({
   );
   const [transparency, setTransparency] = useState<number>(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.TRANSPARENCY);
-    return stored ? parseInt(stored, 10) : 10;
+    return stored ? parseInt(stored, 10) : STEALTH_MODE ? 10 : 0;
   });
 
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");

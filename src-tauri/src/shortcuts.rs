@@ -10,6 +10,7 @@ use tokio::time::{sleep, Duration};
 #[cfg(target_os = "macos")]
 use tauri_nspanel::ManagerExt;
 
+use crate::stealth::STEALTH_MODE;
 use crate::window::show_dashboard_window;
 // State for window visibility
 pub struct WindowVisibility {
@@ -517,6 +518,9 @@ pub fn set_license_status<R: Runtime>(app: AppHandle<R>, has_license: bool) -> R
 /// Tauri command to set app icon visibility in dock/taskbar
 #[tauri::command]
 pub fn set_app_icon_visibility<R: Runtime>(app: AppHandle<R>, visible: bool) -> Result<(), String> {
+    // Outside stealth mode the icon always stays visible
+    let visible = visible || !STEALTH_MODE;
+
     #[cfg(target_os = "macos")]
     {
         // On macOS, use activation policy to control dock icon

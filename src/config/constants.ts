@@ -1,4 +1,8 @@
 // Storage keys
+// Master switch for stealth features (invisible cursor, default transparency).
+// Keep in sync with STEALTH_MODE in src-tauri/src/stealth.rs.
+export const STEALTH_MODE = false;
+
 export const STORAGE_KEYS = {
   THEME: "theme",
   TRANSPARENCY: "transparency",

@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from "@/config";
+import { STEALTH_MODE, STORAGE_KEYS } from "@/config";
 
 export type CursorType = "invisible" | "default" | "auto";
 
@@ -21,7 +21,7 @@ export const DEFAULT_CUSTOMIZABLE_STATE: CustomizableState = {
   appIcon: { isVisible: true },
   alwaysOnTop: { isEnabled: false },
   autostart: { isEnabled: true },
-  cursor: { type: "invisible" },
+  cursor: { type: STEALTH_MODE ? "invisible" : "default" },
 };
 
 /**
