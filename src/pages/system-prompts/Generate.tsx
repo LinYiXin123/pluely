@@ -3,7 +3,6 @@ import {
   PopoverContent,
   PopoverTrigger,
   Button,
-  GetLicense,
   Textarea,
 } from "@/components";
 import { SparklesIcon } from "lucide-react";
@@ -29,6 +28,11 @@ export const GenerateSystemPrompt = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Generating prompts uses Pluely's paid cloud API
+  if (!hasActiveLicense) {
+    return null;
+  }
 
   const handleGenerate = async () => {
     if (!userPrompt.trim()) {
@@ -106,8 +110,7 @@ export const GenerateSystemPrompt = ({
 
           {error && <p className="text-xs text-destructive">{error}</p>}
 
-          {hasActiveLicense ? (
-            <Button
+          <Button
               className="w-full"
               onClick={handleGenerate}
               disabled={!userPrompt.trim() || isGenerating}
@@ -124,20 +127,6 @@ export const GenerateSystemPrompt = ({
                 </>
               )}
             </Button>
-          ) : (
-            <div className="w-full flex flex-col gap-3">
-              <p className="text-sm font-medium text-muted-foreground">
-                {t(
-                  "You need an active license to use this feature. Click the button below to get a license."
-                )}
-              </p>
-              <GetLicense
-                buttonText={t("Get License")}
-                buttonClassName="w-full"
-                setState={setIsOpen}
-              />
-            </div>
-          )}
         </div>
       </PopoverContent>
     </Popover>

@@ -7,13 +7,11 @@ import {
   CardTitle,
   Header,
   Empty,
-  GetLicense,
 } from "@/components";
 import {
   CheckCircle2,
   Sparkles,
   BotIcon,
-  LockIcon,
   ClockIcon,
 } from "lucide-react";
 import { useApp } from "@/contexts";
@@ -201,6 +199,11 @@ export const PluelyPrompts = () => {
     );
   };
 
+  // Pluely's default prompts are tied to its paid cloud models
+  if (!hasActiveLicense) {
+    return null;
+  }
+
   if (isLoading) {
     return (
       <div className="space-y-4 mt-6">
@@ -255,24 +258,17 @@ export const PluelyPrompts = () => {
             )}
           </div>
         </div>
-        {!hasActiveLicense && (
-          <GetLicense buttonText={t("Unlock")} buttonClassName="shrink-0" />
-        )}
       </div>
 
       <div
-        className={`grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-4 ${
-          !hasActiveLicense ? "opacity-60" : ""
-        }`}
+        className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-4"
       >
         {prompts.map((prompt, index) => {
           const isSelected = isPromptSelected(prompt);
           return (
             <Card
               key={`${prompt.title}-${index}`}
-              className={`relative border lg:border-2 shadow-none p-4 pb-10 gap-0 group transition-all hover:shadow-sm ${
-                hasActiveLicense ? "cursor-pointer" : "cursor-not-allowed"
-              } ${
+              className={`relative border lg:border-2 shadow-none p-4 pb-10 gap-0 group transition-all hover:shadow-sm cursor-pointer ${
                 isSelected
                   ? "!bg-primary/5 dark:!bg-primary/10 border-primary"
                   : "!bg-black/5 dark:!bg-white/5 border-transparent"
@@ -281,9 +277,6 @@ export const PluelyPrompts = () => {
             >
               {isSelected && (
                 <CheckCircle2 className="size-5 text-green-500 flex-shrink-0 absolute top-2 right-2" />
-              )}
-              {!hasActiveLicense && (
-                <LockIcon className="size-4 text-muted-foreground flex-shrink-0 absolute top-2 right-2" />
               )}
               <CardHeader className="p-0 pb-0 select-none">
                 <div className="flex items-start justify-between gap-2 relative">

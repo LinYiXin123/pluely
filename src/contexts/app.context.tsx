@@ -173,8 +173,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const syncLicenseState = async () => {
       try {
+        // Local features (like move window) are not license-gated in this fork
         await invoke("set_license_status", {
-          hasLicense: hasActiveLicense,
+          hasLicense: true,
         });
 
         const config = getShortcutsConfig();

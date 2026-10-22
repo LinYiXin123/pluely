@@ -582,4 +582,7 @@ export const zh: Record<string, string> = {
   "Permission not granted. Please try the manual steps.": "未获得权限，请尝试手动步骤。",
   "Failed to request access. Please try the manual steps below.": "请求权限失败，请尝试下面的手动步骤。",
   "Failed to load version": "加载版本失败",
+  "Optional: activate a Pluely license here to use Pluely's hosted AI models. Everything else works with your own providers.": "可选：在这里激活 Pluely 许可证，即可使用 Pluely 托管的 AI 模型。其他功能用你自己的服务商就能用。",
+  "This fork on GitHub": "本分支的 GitHub 仓库",
+  "Original Pluely project (by Srikanth Nani)": "Pluely 原项目（作者 Srikanth Nani）",
 };
